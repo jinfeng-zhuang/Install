@@ -373,6 +373,32 @@ struct avmips_log_desc {
     int b3rdInit;
 };
 
+typedef unsigned long long trid_uint64;
+typedef unsigned int trid_uint32;
+
+typedef struct _tagTriVideoShareInfo {
+    // part1: video decoder info
+    trid_uint64 VideoPTS;
+    trid_uint64 VideoPtsStcDelta;
+    trid_uint64 StcPcrDelta;
+    trid_uint32 bVideoSyncOn;
+    trid_uint32 VideoErrorMB;
+    trid_uint32 bVideoLocked;
+    trid_uint32 VideoCount;
+
+    // part2: video profile&level
+    trid_uint32 VideoStandard;
+    trid_uint32 VideoProfile;
+    trid_uint32 VideoLevel;
+
+    // part3: video statistics info
+    trid_uint32 SkippedFrams;
+    trid_uint32 DecodedFrames;
+    trid_uint64 DecodedBytes;
+    trid_uint32 BytesInESBuffer;
+    trid_uint32 FrmsInRDY2DispQ;
+} triVideoSharedInfo_t;
+
 ///////////////////////////////////////////////////////////////////////////////
 
 extern const char *mpegformat_framerate_name(int rate);
@@ -380,10 +406,14 @@ extern void dump_mpegdisp_registers(struct mpegdisp_regs *regs);
 extern int read_mpegdisp_regsiters(unsigned int base, struct mpegdisp_regs *regs);
 extern int mpegdisp_is_resolution_change(struct mpegdisp_regs *regs);
 
-extern int avmips_get_ves_desc(struct ringbuffer *r, unsigned int channel);
+extern struct ringbuffer* avmips_get_ves_desc(unsigned char channel);
+
 extern int avmips_get_pts_desc(struct ringbuffer *r, int channel);
 
 extern int vs_disable_avsync(void);
+
+extern unsigned int avmips_frameq_get_base(int chan);
+extern unsigned int avmips_frameq_get_rdy2dispQ_count(unsigned int base);
 
 extern int vs_get_Ready2DispQ_value(unsigned int *value, unsigned int channel);
 
@@ -392,6 +422,8 @@ extern int chip_id(unsigned int value);
 extern unsigned char *avmips_dump_pts_queue(int channel);
 
 extern const char *mpegformat_framerate_name(int rate);
+
+extern unsigned int avmips_frameinfo_register_addr(void);
 
 ///////////////////////////////////////////////////////////////////////////////
 

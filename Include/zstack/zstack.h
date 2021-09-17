@@ -32,4 +32,6 @@
 
 #include "ipc.h"
 
+#include "mp4.h"
+
 #endif

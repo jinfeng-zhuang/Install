@@ -17,12 +17,22 @@
 #define NULL	((void *)0)
 #endif
 
+#define SIZE_1KB	(1<<10)
+#define SIZE_1MB	(1<<20)
+#define SIZE_1GB	(1<<30)
+
+// 0 = OK
+// -1 = ERROR
+#ifndef RESULT
+#define RESULT int
+#endif
+
 #ifndef TRUE
-#define TRUE	(1)
+#define TRUE 1
 #endif
 
 #ifndef FALSE
-#define FALSE	(0)
+#define FALSE 0
 #endif
 
 #endif

@@ -21,12 +21,22 @@ enum YUVFormat {
     NV61,
 
     // 444
+    YUV444,
+};
+
+struct YUV {
+    enum YUVFormat format;
+    int width; // stride
+    int height;
+    unsigned char* buffer;
 };
 
 struct YUV_Wrapper {
     unsigned int (*FrameSize)(int width, int height);
+    unsigned short (*GetY)(unsigned char* buffer, int width, int height, int x, int y);
     unsigned short (*GetU)(unsigned char* buffer, int width, int height, int x, int y);
     unsigned short (*GetV)(unsigned char* buffer, int width, int height, int x, int y);
+    void (*SetY)(unsigned char* buffer, int width, int height, int x, int y, unsigned short value);
     void (*SetU)(unsigned char* buffer, int width, int height, int x, int y, unsigned short u);
     void (*SetV)(unsigned char* buffer, int width, int height, int x, int y, unsigned short v);
 };

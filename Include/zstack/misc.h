@@ -90,4 +90,8 @@ extern u32 serial_open(u8 id);
 extern u32 serial_read(u32 fd, u8* buffer, u32 length);
 extern u32 serial_write(u32 fd, u8* buffer, u32 length);
 
+extern int bmp_save(const char* filename, unsigned char* rgb, int w, int h);
+
+extern int is_printable(unsigned char c);
+
 #endif

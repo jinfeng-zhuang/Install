@@ -5,7 +5,7 @@
 
 // continuously transfer
 extern int net_connect(const char* host_name, u16 port, u32 msec);
-extern int net_transfer(void* tx, void* rx);
+extern int net_transfer(const char *name, void* tx, void* rx);
 extern int net_disconnect(void);
 
 extern int network_init(void);
