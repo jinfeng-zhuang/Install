@@ -94,6 +94,7 @@ extern int bmp_save(const char* filename, unsigned char* rgb, int w, int h);
 
 extern int is_printable(unsigned char c);
 
+extern u64 BE_read_u64(u8* buffer);
 extern u32 BE_read_u32(u8* buffer);
 extern u16 BE_read_u16(u8* buffer);
 extern u8 BE_read_u8(u8* buffer);

@@ -100,6 +100,45 @@ struct SampleDescriptionBox {
 	struct AudioSampleEntry ASE;
 	struct HintSampleEntry HSE;
 };
+
+struct MP4TrackHeader {
+	struct FullBox fullbox;
+
+	u32 creation_time;
+	u32 modification_time;
+	u32 track_id;
+	u32 rsvd;
+	u32 duration;
+
+	u32 rsvd2[2];
+	u16 layer;
+	u16 group;
+	u16 volumn;
+	u16 rsvd3;
+	u32 matrix[9];
+	u32 width;
+	u32 height;
+};
+
+struct MP4TrackHeaderV1 {
+	struct FullBox fullbox;
+
+	u64 creation_time;
+	u64 modification_time;
+	u32 track_id;
+	u32 rsvd;
+	u64 duration;
+
+	u32 rsvd2[2];
+	u16 layer;
+	u16 group;
+	u16 volumn;
+	u16 rsvd3;
+	u32 matrix[9];
+	u32 width;
+	u32 height;
+};
+
 #pragma pack(pop)
 
 struct mp4box_parser {
@@ -110,6 +149,14 @@ struct mp4box_parser {
 struct mp4_box_stsd {
 	int count;
 	struct SampleDescriptionBox SampleDescBox;
+
+	u16 sps_count;
+	u16* sps_len;
+	u8** sps;
+
+	u16 pps_count;
+	u16* pps_len;
+	u8** pps;
 };
 
 struct mp4_box_stts {
@@ -177,6 +224,40 @@ struct MP4Chunk {
 	u32* offset;
 	u32* len;
 	u32* data;
+};
+
+struct mp4_box_elst {
+	int entry_count;
+};
+
+struct mp4_box_tkhd {
+	u32 id;
+	u32 duration;
+	u32 volumn;
+	u32 width;
+	u32 height;
+};
+
+struct MP4Track {
+	u32 id; // track id in tkhd
+	u32 durationTrack;
+	u32 width;
+	u32 height;
+	u32 volumn;
+
+	struct mp4_box_elst elst;
+
+	u32 timescale; // mdhd
+	u32 durationMedia;
+	u32 handle;
+
+	struct mp4_box_stsd stsd;
+	struct mp4_box_stts stts;
+	struct mp4_box_ctts ctts;
+	struct mp4_box_stss stss;
+	struct mp4_box_stsc stsc;
+	struct mp4_box_stsz stsz;
+	struct mp4_box_stco stco;
 };
 
 extern RESULT mp4_box_scan(int depth, u8* buffer, u32 len);
