@@ -10,14 +10,6 @@ Arch: x64
 * python lib
 * zlib
 * tinyxml2
-
-## FFMPEG
-
-avcodec.lib
-avdevice.lib
-avfilter.lib
-avformat.lib
-avutil.lib
-postproc.lib
-swresample.lib
-swscale.lib
+* freetype
+* wxWidget
+* http parser: https://github.com/nodejs/http-parser
